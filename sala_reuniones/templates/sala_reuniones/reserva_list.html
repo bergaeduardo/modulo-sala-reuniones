@@ -1,0 +1,50 @@
+{% extends "sala_reuniones/base.html" %}
+
+{% block content %}
+
+    {% if reservas%}
+    	{% for reserva in reservas %}
+    		<div class="panel panel-default">
+                <div class="panel-heading">{{reserva.sala_reuniones.nombre}}</div>
+                <div class="panel-body">
+                    <p>Fecha: {{ reserva.fecha }}</p>
+                    <p>Horario:
+                        <span class="label label-default">
+                            {{ reserva.hora_inicio }} - {{ reserva.hora_final }}
+                        </span>
+                    </p>
+                    <p>Ubicaci&oacute;n: {{reserva.sala_reuniones.ubicacion}}</p>
+                    <p>Capacidad: {{reserva.sala_reuniones.capacidad}}</p>
+                    <p>Insumos: {{ reserva.sala_reuniones.insumos.all|join:", " }}</p>
+                    <p>Usuario: 
+                        <span class="label label-primary">
+                            {{ reserva.user.username }}
+                        </span>
+                    </p>
+                    {% if reserva.estado == 'd' %}
+                        <p>Estado: <span class="label label-success">Disponible</span> </p>
+                    {% elif reserva.estado == 'c' and user.username != reserva.user.username %}
+                        <p>Estado: <span class="label label-danger" data-toggle="tooltip"  data-original-tittle="No se puede editar">No disponible</span></p>
+                    {% elif reserva.estado == 'r'  %}
+                        <p>Estado: <span class="label label-warning">Reservada</span> </p>
+                    {% elif reserva.estado == 'c' and user.username == reserva.user.username %}
+                        <p>Estado: <span class="label label-info">Confirmada</span></p>
+                    {% endif %}
+                </div>
+                {% if reserva.estado != 'c'%}
+                    <div class="panel-footer">
+                        <a class="btn btn-default" href="{% url 'sala_reuniones:adicionar_reserva' pk=reserva.sala_reuniones.pk %}">Reservar</a>
+                        {% if user.is_superuser %}
+                            <a href="{% url 'sala_reuniones:eliminar_reserva' pk=reserva.pk %}" class="btn btn-danger">
+                                Eliminar
+                            </a>
+                            
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+    	{% endfor %}
+        {% else %}
+            <h3><strong><em>No se han realizado reservas hasta el momento</em></strong></h3>
+    {% endif %}
+{% endblock content %}

@@ -1,0 +1,14 @@
+
+.navbar-center{
+    position: absolute;
+    left: 65%;
+}
+
+.color-azul-oscuro{
+    background-color: #204d74;
+}
+
+#calendar{
+	width: 900px;
+	margin: auto;
+}

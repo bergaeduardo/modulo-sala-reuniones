@@ -1,0 +1,44 @@
+{% extends "sala_reuniones/base.html" %}
+
+{% block content_out %}
+	<div class="row">
+		<div id="calendar"></div>
+	</div>
+{% endblock content_out %}
+
+{% block js_extra %}
+	<script>
+		$(document).ready(function(){
+			
+
+			$('#calendar').fullCalendar({
+				
+				editable: true,
+				events: [
+				{% for reserva in reservas %}
+				{	
+					title: "{{ reserva.sala_reuniones.nombre|safe }} - \
+					{% if reserva.estado == 'r'  %}\
+					Reservada	\
+					{% elif reserva.estado == 'c'%}\
+					Confirmada\
+					{% endif %}",
+					start: "{{ reserva.fecha|safe }}",
+					id: "{{ reserva.pk }}"
+
+					
+					
+				},
+				{% endfor %}
+				],
+				eventClick: function(event, element){
+					var id = event.id;
+
+					window.location = "http://127.0.0.1:8000/sala_reuniones/editar/reserva"+"/"+ id + "/" ;
+				}
+
+			});
+		});
+
+	</script>
+{% endblock js_extra %}

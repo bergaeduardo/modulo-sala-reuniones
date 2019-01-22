@@ -1,0 +1,20 @@
+{%  extends 'sala_reuniones/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row">
+	<div class="panel panel-default">
+		<div class="panel-heading"><strong>Entrar</strong></div>
+		<div class="panel-body">
+			<form action="" method="POST">{% csrf_token %}
+				<div class="form-group">
+					{{ form|crispy }}
+				</div>
+				<hr>
+				<button class="btn btn-default" type="Submit">Entrar</button>
+			</form>
+		</div>
+	</div>
+</div>	
+{% endblock content %}
+

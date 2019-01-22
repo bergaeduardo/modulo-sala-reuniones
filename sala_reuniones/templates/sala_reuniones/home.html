@@ -1,0 +1,40 @@
+{% extends 'sala_reuniones/base.html' %}
+
+{% block content %}
+
+    {% for sala in salas_reuniones %}
+        <div class="panel panel-default">
+            <div class="panel-heading">{{sala.nombre}}</div>
+            <div class="panel-body">
+                <p>Ubicaci&oacute;n: {{sala.ubicacion}}</p>
+                <p>Capacidad: {{sala.capacidad}}</p>
+                <p>Insumos: {{ sala.insumos.all|join:", " }}</p>
+                <p>Horario de disponibilidad: <br>
+                    <div>
+                        {% for horario in sala.horario_disponibilidad.all %}
+                            <span class="label label-default">{{ horario }}</span> <br>
+                        {% endfor %}
+                    </div>
+                </p>
+            </div>
+            
+            <div class="panel-footer">
+                <a class="btn btn-default" href="{% url 'sala_reuniones:adicionar_reserva' pk=sala.pk %}">Reservar</a>
+            </div>
+        
+
+        </div>
+    {% endfor %}
+{% endblock %}
+
+
+{% block js_extra %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+            $('[data-toggle="tooltip"]').tooltip({placement: 'right'});
+
+        });
+    </script>
+
+{% endblock %}

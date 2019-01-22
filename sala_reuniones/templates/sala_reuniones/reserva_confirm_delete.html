@@ -1,0 +1,29 @@
+{% extends "sala_reuniones/base.html" %}
+
+{% block content %}
+	<div class="row">
+		<div class="panel panel-default">
+			<div class="panel-heading">Eliminar</div>
+			<div class="panel-body">
+				<form action="" method="POST">{% csrf_token %}
+					<p>Seguro q desea eliminar la reserva del sal&oacute;n 
+						<span class="label label-warning">
+							<em>{{ object.sala_reuniones.nombre}}</em>
+						</span> 
+						para el 
+						<span class="label label-default">{{object.fecha}}</span>
+						de <span class="label label-default">{{object.hora_inicio}} - {{object.hora_final}}</span>?
+					</p>
+					<br>
+					<br>
+					<br>
+					<div class="form-group">
+						<button class="btn btn-block btn-danger" type="submit">Eliminar</button>
+					</div>
+				</form>
+				
+			</div>
+		</div>
+
+	</div>
+{% endblock content %}
