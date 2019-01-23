@@ -103,6 +103,6 @@ class EditarReservaView(LoginRequiredMixin, FormValidMessageMixin, UpdateView):
         return context_data
 
 
-class EliminarEventosView(LoginRequiredMixin, DeleteView):
+class EliminarReservasView(LoginRequiredMixin, DeleteView):
     model = Reserva
     success_url = reverse_lazy('sala_reuniones:listar_reservas')
