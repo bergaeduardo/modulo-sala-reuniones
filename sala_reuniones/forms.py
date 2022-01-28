@@ -24,7 +24,7 @@ class ReservaForm(forms.ModelForm):
 
     class Meta:
         model = Reserva
-        fields = ['fecha', 'hora_inicio', 'hora_final', 'capacidad', 'sala_reuniones', 'confirmada', 'user']
+        fields = ['fecha', 'hora_inicio', 'hora_final', 'capacidad', 'sala_reuniones', 'user']
         widgets = {
             'fecha': DatePicker,
             'hora_inicio': TimePicker,

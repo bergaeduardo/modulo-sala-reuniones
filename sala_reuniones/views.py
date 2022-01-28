@@ -47,10 +47,11 @@ class AdicionarReservaView(LoginRequiredMixin, CreateView):
         formulario = form.save(commit=False)
         formulario.user = self.request.user
 
-        if formulario.confirmada:
-            formulario.estado = Reserva.CONFIRMADA
-        else:
-            formulario.estado = Reserva.RESERVADA
+        # if formulario.confirmada:
+        #     formulario.estado = Reserva.CONFIRMADA
+        # else:
+        #     formulario.estado = Reserva.RESERVADA
+        formulario.estado = Reserva.CONFIRMADA
 
         formulario.save()
 
@@ -81,7 +82,7 @@ class ReservasFullcalendario(TemplateView):
     def get_context_data(self, *args, **kwargs):
         context_data = super(ReservasFullcalendario, self).get_context_data(*args, **kwargs)
         context_data['reservas'] = Reserva.objects.all()
-
+        # print(context_data['reservas'])
         return context_data
 
 

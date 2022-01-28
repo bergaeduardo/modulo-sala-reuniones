@@ -71,15 +71,15 @@ class Reserva(models.Model):
     fecha = models.DateField()
     hora_inicio = models.TimeField(verbose_name='Hora inicial')
     hora_final = models.TimeField(verbose_name='Hora final')
-    capacidad = models.IntegerField(verbose_name='Capacidad de personas')
-    sala_reuniones = models.ForeignKey(SalaReuniones)
+    capacidad = models.IntegerField(verbose_name='Capacidad de personas', default=10)
+    sala_reuniones = models.ForeignKey(SalaReuniones, on_delete=models.DO_NOTHING,default=1)
     confirmada = models.BooleanField(default=False)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING)
     estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default=DISPONIBLE)
 
     class Meta:
         ordering = ['fecha', 'sala_reuniones']
 
     def __str__(self):
-        return (str(self.fecha) + ' ' + self.sala_reuniones.nombre + ' ' + str(self.hora_inicio.strftime('%H:%M')) + ' ' + str(self.hora_final))
+        return (str(self.fecha) + ' ' + self.sala_reuniones.nombre + ' ' + str(self.hora_inicio.strftime('%H:%M')) + ' ' + str(self.hora_final.strftime('%H:%M')))
         # .strftime('%d-%b-%Y')

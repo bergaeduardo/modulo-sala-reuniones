@@ -6,7 +6,7 @@ from .views import (AdicionarReservaView,
                     EditarReservaView,
                     EliminarReservasView)
 
-
+app_name = "sala_reuniones"
 urlpatterns = [
 
     url(r'^adicionar/reserva/(?P<pk>\d+)/$', AdicionarReservaView.as_view(), name='adicionar_reserva'),

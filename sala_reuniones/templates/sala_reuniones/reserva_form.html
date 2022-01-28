@@ -14,23 +14,25 @@
 					<div class="form-group">
 						{{ form|crispy }}
 					</div>
-					<div class="form-group">
-						<button class="btn btn-default" type="submit">
+					{% if user.id == reserva.user_id or reserva.user_id == nulla %}
+						<div class="form-group">
+							<button class="btn btn-default" type="submit">
+								{% if editar %}
+									Editar
+								{% else %}
+									Reservar
+								{% endif %}
+							</button>
 							{% if editar %}
-								Editar
-							{% else %}
-								Reservar
+								<a href="{% url 'sala_reuniones:eliminar_reserva' pk=pk  %}" class="btn btn-danger">Eliminar</a>
 							{% endif %}
-						</button>
-						{% if editar %}
-							<a href="{% url 'sala_reuniones:eliminar_reserva' pk=pk  %}" class="btn btn-danger">Eliminar</a>
-						{% endif %}
 
-					</div>
+						</div>
+					{% endif %}
 				</form>
 			</div>
 		</div>
-	</div>
+	</div>	
 
 	
 {% endblock content %}
@@ -40,9 +42,17 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">{{ sala_reunion }}</div>
 			<div class="panel-body">
+				<!-- {% if user.id == reserva.user_id %}
+					<strong><em>Hola mundo </em></strong>
+				{% endif %}
+				{% if reserva.user_id == nulla %}
+					<strong><em>Macaco </em></strong>
+				{% endif %}
+				userid <strong><em>{{ user.id }} </em></strong>
+				reservauser_id <strong><em>{{ reserva.user_id }} </em></strong> -->
 				<strong>Horarios:</strong><br>
 				{% for horario in horarios %}
-					<span class="label label-default">{{ horario }}</span>
+					<span class="label label-primary">{{ horario }}</span>
 				{% endfor %}
 
 			</div>

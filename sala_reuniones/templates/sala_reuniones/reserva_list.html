@@ -1,13 +1,23 @@
 {% extends "sala_reuniones/base.html" %}
 
 {% block content %}
-
+    
     {% if reservas%}
     	{% for reserva in reservas %}
     		<div class="panel panel-default">
-                <div class="panel-heading">{{reserva.sala_reuniones.nombre}}</div>
+                <div class="panel-heading">
+                     <p>
+                        
+                        Fecha: {{ reserva.fecha }}
+                    </p>
+                </div>
                 <div class="panel-body">
-                    <p>Fecha: {{ reserva.fecha }}</p>
+                    <!-- <p>Fecha: {{ reserva.fecha }}</p> -->
+                    <p>ID: 
+                        <span class="label label-primary">
+                            {{ reserva.pk }}
+                        </span>
+                    </p>
                     <p>Horario:
                         <span class="label label-default">
                             {{ reserva.hora_inicio }} - {{ reserva.hora_final }}
@@ -21,6 +31,7 @@
                             {{ reserva.user.username }}
                         </span>
                     </p>
+                   
                     {% if reserva.estado == 'd' %}
                         <p>Estado: <span class="label label-success">Disponible</span> </p>
                     {% elif reserva.estado == 'c' and user.username != reserva.user.username %}
@@ -33,7 +44,7 @@
                 </div>
                 {% if reserva.estado != 'c'%}
                     <div class="panel-footer">
-                        <a class="btn btn-default" href="{% url 'sala_reuniones:adicionar_reserva' pk=reserva.sala_reuniones.pk %}">Reservar</a>
+                        <a class="btn btn-default" href="{% url 'sala_reuniones:editar_reserva' pk=reserva.pk %}">Editar</a>
                         {% if user.is_superuser %}
                             <a href="{% url 'sala_reuniones:eliminar_reserva' pk=reserva.pk %}" class="btn btn-danger">
                                 Eliminar

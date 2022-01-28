@@ -16,15 +16,16 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.auth.views import LoginView, LogoutView
+from django.urls import path
 
 from sala_reuniones.views import RegisterView, HomeView
-
+app_name = "sala_reuniones"
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^registrarse/$', RegisterView.as_view(), name='registrarse'),
     url(r'login/$', LoginView.as_view(template_name='sala_reuniones/entrar.html'), name='entrar'),
     url(r'^salir/$', LogoutView.as_view(), name='salir'),
-    url(r'^sala_reuniones/', include('sala_reuniones.urls', namespace='sala_reuniones')),
+    url(r'^sala_reuniones/', include(('sala_reuniones.urls'), namespace='sala_reuniones')),
     url(r'^$', HomeView.as_view(), name='home'),
 ]

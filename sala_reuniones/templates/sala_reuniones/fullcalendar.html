@@ -1,41 +1,72 @@
 {% extends "sala_reuniones/base.html" %}
 
 {% block content_out %}
-	<div class="row">
-		<div id="calendar"></div>
+<section class="content">
+	<div class="container-fluid">
+	  <!-- SELECT2 EXAMPLE -->
+	  <div class="card card-default">
+		<!-- /.card-header -->
+		<div class="card-body">
+		  <div class="row">
+			<div class="col-md-6">
+				<div id="calendar"></div>
+			</div>
+		  </div>
+		</div>
 	</div>
+</section>
 {% endblock content_out %}
 
 {% block js_extra %}
 	<script>
+
+		
 		$(document).ready(function(){
 			
-
+			
 			$('#calendar').fullCalendar({
-				
+				headerToolbar: {
+					left  : 'prev,next today',
+					center: 'title',
+					right : 'dayGridMonth,timeGridWeek,timeGridDay'
+				},
 				editable: true,
 				events: [
 				{% for reserva in reservas %}
-				{	
-					title: "{{ reserva.sala_reuniones.nombre|safe }} - \
-					{% if reserva.estado == 'r'  %}\
-					Reservada	\
-					{% elif reserva.estado == 'c'%}\
-					Confirmada\
-					{% endif %}",
-					start: "{{ reserva.fecha|safe }}",
-					id: "{{ reserva.pk }}"
+					{	
+						// title: "{% if reserva.estado == 'r'  %}\
+						// Reservada	\
+						// {% elif reserva.estado == 'c'%}\
+						// Confirmada\
+						// {% endif %} {{ reserva.hora_final|safe }}",
+						title: "{{ reserva.user.username|safe }} {{ reserva.hora_final|safe }}",
+						start: "{{ reserva.fecha|safe }} {{ reserva.hora_inicio|safe }}",
+						end: "{{ reserva.fecha|safe }} {{ reserva.hora_final|safe }}",
+						id: "{{ reserva.pk }}",
+						backgroundColor: "{% if reserva.estado == 'r'  %}\
+						#666\
+						{% elif reserva.estado == 'c'%}\
+						#28a745\
+						{% endif %}",
+						borderColor : "{% if reserva.estado == 'r'  %}\
+						#666\
+						{% elif reserva.estado == 'c'%}\
+						#28a745\
+						{% endif %}",
 
-					
-					
-				},
+						
+						
+					},
 				{% endfor %}
 				],
-				eventClick: function(event, element){
-					var id = event.id;
+			
+					eventClick: function(event, element){
+						var id = event.id;
 
-					window.location = "http://127.0.0.1:8000/sala_reuniones/editar/reserva"+"/"+ id + "/" ;
-				}
+						window.location = "http://192.168.1.127:8080/sala_reuniones/editar/reserva"+"/"+ id + "/" ;
+						
+					}
+				
 
 			});
 		});
