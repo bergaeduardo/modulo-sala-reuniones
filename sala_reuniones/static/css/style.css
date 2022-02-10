@@ -12,3 +12,11 @@
 	width: 900px;
 	margin: auto;
 }
+
+.invalid-feedback{
+    color: red;
+ }
+
+ .error-message{
+    color: red;
+ }

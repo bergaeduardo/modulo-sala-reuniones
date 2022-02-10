@@ -5,6 +5,7 @@
 	{{ form.media.css }}
 {% endblock css %}
 
+
 {% block content %}
 	<div class="row">
 		<div class="panel panel-default">
@@ -15,24 +16,45 @@
 						{{ form|crispy }}
 					</div>
 					{% if user.id == reserva.user_id or reserva.user_id == nulla %}
-						<div class="form-group">
-							<button class="btn btn-default" type="submit">
+						{% if aux2 >= aux  %}
+							<div class="form-group">
+								<button class="btn btn-default" type="submit">
+									{% if editar %}
+										Editar
+									{% else %}
+										Reservar
+									{% endif %}
+								</button>
 								{% if editar %}
-									Editar
-								{% else %}
-									Reservar
+									<a href="{% url 'sala_reuniones:eliminar_reserva' pk=pk  %}" class="btn btn-danger">Eliminar</a>
 								{% endif %}
-							</button>
-							{% if editar %}
-								<a href="{% url 'sala_reuniones:eliminar_reserva' pk=pk  %}" class="btn btn-danger">Eliminar</a>
-							{% endif %}
+								
 
-						</div>
+							</div>
+						{% endif %}	
 					{% endif %}
+					<a href="http://192.168.1.127:8080/sala_reuniones/listar/reservas/calendario/" class="btn btn-success">Volver</a>
 				</form>
 			</div>
 		</div>
-	</div>	
+	</div>
+	
+		{% if aux2 < aux  %}
+					<div class="panel-footer">
+						<div class="alert alert-danger">
+							<strong>¡Atención!</strong>
+							Esta reserva ya pasó.
+						</div>
+					</div>
+		{% endif %}	
+		<!-- {% if form.errors  %}
+					<div class="panel-footer">
+						<div class="alert alert-danger">
+							<strong>¡Atención!</strong>
+							{{ form.errors }}
+						</div>
+					</div>
+		{% endif %}	 -->
 
 	
 {% endblock content %}
@@ -42,14 +64,6 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">{{ sala_reunion }}</div>
 			<div class="panel-body">
-				<!-- {% if user.id == reserva.user_id %}
-					<strong><em>Hola mundo </em></strong>
-				{% endif %}
-				{% if reserva.user_id == nulla %}
-					<strong><em>Macaco </em></strong>
-				{% endif %}
-				userid <strong><em>{{ user.id }} </em></strong>
-				reservauser_id <strong><em>{{ reserva.user_id }} </em></strong> -->
 				<strong>Horarios:</strong><br>
 				{% for horario in horarios %}
 					<span class="label label-primary">{{ horario }}</span>

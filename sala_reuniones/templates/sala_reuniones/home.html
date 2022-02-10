@@ -1,31 +1,64 @@
 {% extends 'sala_reuniones/base.html' %}
 
+
 {% block content %}
 
-    {% for sala in salas_reuniones %}
-        <div class="panel panel-default">
-            <div class="panel-heading">{{sala.nombre}}</div>
-            <div class="panel-body">
-                <p>Ubicaci&oacute;n: {{sala.ubicacion}}</p>
-                <p>Capacidad: {{sala.capacidad}}</p>
-                <!-- <p>Insumos: {{ sala.insumos.all|join:", " }}</p> -->
-                <p>Horario de disponibilidad: <br>
-                    <div>
-                        {% for horario in sala.horario_disponibilidad.all %}
-                            <span class="label label-primary">{{ horario }}</span> <br>
-                        {% endfor %}
-                    </div>
-                </p>
-            </div>
-            
-            <div class="panel-footer">
-                <a class="btn btn-default" href="{% url 'sala_reuniones:adicionar_reserva' pk=sala.pk %}">Reservar</a>
-            </div>
-        
+        <!-- <div class="col-lg-12"> -->
 
-        </div>
-    {% endfor %}
+            {% for sala in salas_reuniones %}
+                <div class="panel panel-primary">
+                    <div class="panel-heading">{{sala.nombre}}</div>
+                    <div class="panel-body">
+                        <p>Ubicaci&oacute;n: {{sala.ubicacion}}</p>
+                        <!-- <p>Capacidad: {{sala.capacidad}}</p> -->
+                        
+                        <p>Horario de disponibilidad: <br>
+                            <div>
+                                {% for horario in sala.horario_disponibilidad.all %}
+                                    <span class="label label-primary">{{ horario }}</span> <br>
+                                {% endfor %}
+                            </div>
+                        </p>
+                    </div>
+                    
+                    <div class="panel-footer">
+                        <a class="btn btn-success" href="{% url 'sala_reuniones:adicionar_reserva' pk=sala.pk %}">Reservar</a>
+                    </div>
+                
+
+                </div>
+            {% endfor %}
 {% endblock %}
+
+{% block content_extra %}
+
+    
+        
+        <div class="col-md-8">
+            <h2> Para hoy </h2>
+            <div class="panel-group">       
+                {% if reservas%}
+                
+                    {% for reserva in reservas %}
+                    
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                Horario: <span class="label label-default"> {{ reserva.hora_inicio }} - {{ reserva.hora_final }} </span>  
+                                Usuario: <span class="label label-primary">{{ reserva.user.username }}</span></div>
+                        </div>
+
+                    {% endfor %}
+                    {% else %}
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <strong><em>No hay reservas</em></strong>
+                            </div>
+                        </div>
+                {% endif %}
+            </div>
+        </div>
+    
+{% endblock content_extra %}
 
 
 {% block js_extra %}

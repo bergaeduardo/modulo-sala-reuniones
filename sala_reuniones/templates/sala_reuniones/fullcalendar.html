@@ -6,6 +6,15 @@
 	  <!-- SELECT2 EXAMPLE -->
 	  <div class="card card-default">
 		<!-- /.card-header -->
+		<div class="card-header">
+			<div class="pull-left">
+				
+				{% if user.is_superuser %}
+				<a class="btn btn-warning" href="http://192.168.1.127:8080/sala_reuniones/adicionar/reserva/1/">Reservar</a>
+				
+				{% endif %}
+			</div>
+		</div>
 		<div class="card-body">
 		  <div class="row">
 			<div class="col-md-6">
@@ -33,6 +42,7 @@
 				editable: true,
 				events: [
 				{% for reserva in reservas %}
+					
 					{	
 						// title: "{% if reserva.estado == 'r'  %}\
 						// Reservada	\
@@ -43,14 +53,14 @@
 						start: "{{ reserva.fecha|safe }} {{ reserva.hora_inicio|safe }}",
 						end: "{{ reserva.fecha|safe }} {{ reserva.hora_final|safe }}",
 						id: "{{ reserva.pk }}",
-						backgroundColor: "{% if reserva.estado == 'r'  %}\
+						backgroundColor: "{% if reserva.pk|divisibleby:2 == True  %}\
 						#666\
-						{% elif reserva.estado == 'c'%}\
+						{% else %}\
 						#28a745\
 						{% endif %}",
-						borderColor : "{% if reserva.estado == 'r'  %}\
+						borderColor : "{% if reserva.pk|divisibleby:2 == True  %}\
 						#666\
-						{% elif reserva.estado == 'c'%}\
+						{% else %}\
 						#28a745\
 						{% endif %}",
 
