@@ -25,16 +25,13 @@
                 <li class="nav-item">
                     <a href="{% url 'home' %}">Inicio</a> 
                 </li>
-                <li class="nav-item">
-                    <!-- <a href="{% url 'sala_reuniones:listar_reservas'  %}">Reservas</a> -->
-                </li>
-                <!-- {% if user.is_superuser %} -->
+                
+                
+                
+                {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a href="{% url 'sala_reuniones:calendario_reservas' %}">Calendario</a>
                     </li>
-                <!-- {% endif %} -->
-                
-                {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a href="{% url 'salir' %}">Salir</a>
                     </li>

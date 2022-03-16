@@ -9,7 +9,7 @@
 		<div class="card-header">
 			<div class="pull-left">
 				
-				{% if user.is_superuser %}
+				{% if user.is_authenticated %}
 				<a class="btn btn-warning" href="http://192.168.1.127:8080/sala_reuniones/adicionar/reserva/1/">Reservar</a>
 				
 				{% endif %}
