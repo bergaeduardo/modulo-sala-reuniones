@@ -6,6 +6,8 @@ from datetime import datetime, timedelta
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.db.models import Q
+
 
 from .models import Reserva, SalaReuniones
 from .widgets import DatePicker, TimePicker
@@ -100,26 +102,7 @@ class ReservaForm(forms.ModelForm):
         except KeyError:
             return self.cleaned_data
 
-        # reserva = Reserva.objects.filter(fecha=fecha, hora_inicio=hora_inicio, hora_final=hora_final)
-        cantReservas =Reserva.objects.filter(fecha=fechaForm, hora_final__gt=hora_inicio).count()
-        # T_reservas=cantReservas.filter(hora_final__lte=hora_final)
-        print('      *******<>*******       ')
-        # for r in cantReservas:
-        #     print(r.hora_inicio.hour)
-        #     print(type(r.hora_inicio))
-        #     print(r.hora_final)
-        #     print(type(r.hora_final))
-        print(cantReservas)
-        print('Fecha: ' + str(fechaForm))
-        print(hora_inicio)
-        # print(H_i)
-        # print(T_reservas)
-        print('Hora de fin:' + str(hora_final))
-        print('      ********<>******       ')
-
-        # if cantReservas > 0:
-        #     print('      *******<8>*******       ')
-        #     print(cantReservas)
+        cantReservas = Reserva.objects.filter(Q(fecha=fecha),Q(Q(hora_inicio__gt=hora_inicio), Q(hora_inicio__lt=hora_final))| Q(Q(hora_final__gt=hora_inicio), Q(hora_final__lt=hora_final))).count()
 
         if cantReservas >0:
             print('      **************       ')

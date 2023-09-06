@@ -10,7 +10,7 @@
 			<div class="pull-left">
 				
 				{% if user.is_authenticated %}
-				<a class="btn btn-warning" href="http://192.168.1.127:8080/sala_reuniones/adicionar/reserva/1/">Reservar</a>
+				<a class="btn btn-warning" href="http://192.168.0.13:8080/sala_reuniones/adicionar/reserva/1/">Reservar</a>
 				
 				{% endif %}
 			</div>
@@ -73,7 +73,7 @@
 					eventClick: function(event, element){
 						var id = event.id;
 
-						window.location = "http://192.168.1.127:8080/sala_reuniones/editar/reserva"+"/"+ id + "/" ;
+						window.location = "http://192.168.0.13:8080/sala_reuniones/editar/reserva"+"/"+ id + "/" ;
 						
 					}
 				
